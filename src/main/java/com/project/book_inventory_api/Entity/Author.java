@@ -3,8 +3,8 @@ package com.project.book_inventory_api.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -14,9 +14,11 @@ public class Author {
     private Long id;
 
     private String name;
+    private String address;
+    private String contact;
 
-    @OneToMany(mappedBy = "author") // One author can have many books
-    private List<Book> books = new ArrayList<>();
+    @ManyToMany // One author can have many books
+    private Set<Book> books=new HashSet<Book>();
 
     // Getters, setters, constructors
 }

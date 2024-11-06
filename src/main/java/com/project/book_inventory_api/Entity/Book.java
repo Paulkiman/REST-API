@@ -4,9 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,11 +18,17 @@ public class Book {
     private Long id;
 
     private String title;
-    private String author;
     private String isbn;
-    private String publisher;
     private double price;
 
-    @ManyToOne// Many books can have one author
-    private Author authors;
+    @ManyToMany()// Many books can have many author
+    @JoinTable(
+            name="book-author",
+            joinColumns = @JoinColumn(name="book_id"),
+            inverseJoinColumns = @JoinColumn(name="author_id")
+    )
+    private Set<Author> Author = new HashSet<>();
+
+    @ManyToOne
+    private Publisher publisher;
 }
